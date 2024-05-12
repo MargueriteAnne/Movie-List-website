@@ -1,12 +1,15 @@
 <?php
 return [
-    'menu' => [
-        'home' => 'Home',
-        'Booking' => 'Booking',
-        'hotel' => 'Hotel',
-        'car rent' => 'Car Rent',
-        'contact' => 'Contact'
-    ],
+    <?php
+$menu = [
+    "Home" => "home.php",
+    "Booking" => "booking.php",
+    "Hotel" => "hotel.php",
+    "Car Rent" => "car_rent.php",
+    "Contact" => "contact.php"
+];
+?>
+,
     'common_data' => [
         'company_name' => 'Your Travel Agency',
         'address' => 'street, Kecskemét, Hungary',

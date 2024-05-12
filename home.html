@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Your Travel Agency</title>
+    <!-- Your CSS styles here -->
+    <style>
+        /* Add your custom styles here */
+        iframe {
+            width: 100%;
+            height: 400px; /* Adjust height as needed */
+            border: none; /* Remove border */
+            margin-bottom: 20px; /* Add some space between iframes */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <!-- Your header content here -->
+        <h1>Welcome to Your Travel Agency</h1>
+        <nav>
+            <ul>
+                <?php foreach ($config['menu'] as $page => $title): ?>
+                    <li><a href="index.php?page=<?= $page ?>"><?= $title ?></a></li>
+                <?php endforeach; ?>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="booking-section">
+            <h2>Find your perfect accommodation</h2>
+            <iframe src="https://www.booking.com/searchresults.pt-pt.html?label=gen173nr-1BCAEoggI46AdIM1gEaGeIAQGYAR-4ARfIAQ_YAQHoAQGIAgGoAgO4AsaYhLIGwAIB0gIkY2Q1NjE1NDAtYzBjZi00YWNmLTllNWUtMzMyYWQyMGM4MjBm2AIF4AIB&sid=94078542bca5effde6e47539ba69cd0b&keep_landing=1&sb_price_type=total" frameborder="0" scrolling="yes"></iframe>
+        </section>
+        
+        <section id="video-section">
+            <h2>Watch our video</h2>
+            <iframe src="https://www.youtube.com/embed/your_youtube_video_id" allowfullscreen></iframe>
+        </section>
+        
+        <section id="map-section">
+            <h2>Our Location</h2>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!..." frameborder="0" allowfullscreen></iframe>
+        </section>
+    </main>
+
+    <footer>
+        <!-- Your footer content here -->
+        <p>&copy; <?php echo date("Y"); ?> Your Travel Agency. All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -7,7 +7,6 @@ if (!isset($_SESSION['username'])) {
     exit;
 }
 
-// Connect to database
 $servername = "(localdb)\mssqllocaldb";
 $username = "";//I used windows authentication
 $password = "";//I used windows authentication
@@ -29,7 +28,7 @@ $result = $conn->query($sql);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Messages</title>
-    <!-- Add CSS styles for table if needed -->
+    <!-- CSS -->
     <style>
         table {
             border-collapse: collapse;

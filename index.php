@@ -1,10 +1,11 @@
 <?php
-// Load configuration
-$config = include('config.php');
+require_once 'config.php';
 
-// Get requested page
-$page = isset($_GET['page']) ? $_GET['page'] : 'home';
+$menu = $_GET['menu'] ?? 'home';
 
-// Include requested page
-include("$page.php");
+if (!array_key_exists($menu, $menuItems)) {
+    $menu = 'home';
+}
+
+require_once $menuItems[$menu]['file'];
 ?>

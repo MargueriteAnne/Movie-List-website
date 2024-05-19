@@ -1,18 +1,20 @@
 <?php
 session_start();
 
-$serverName = "(localdb)\mssqllocaldb"; 
-$connectionOptions = array(
-    "Database" => "mozilista",
-    "Authentication" => "ActiveDirectoryIntegrated" // Integrated Security
-);
 
+$servername = "localhost"; 
+$username = "root";
+$password = "";
+$database = "mozilista";
 
-$conn = sqlsrv_connect($serverName, $connectionOptions);
+// Create connection
+$conn = new mysqli($servername, $username, $password, $database);
 
-if ($conn === false) {
-    echo "Unable to connect to database.<br>";
-    die(print_r(sqlsrv_errors(), true));
+// Check connection
+if ($conn->connect_error) {
+    die("MySQLi Connection failed: " . $conn->connect_error);
+} else {
+    echo "MySQLi Connected successfully";
 }
 
 $menuItems = [

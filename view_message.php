@@ -1,16 +1,29 @@
 <?php
 include 'header.php';
 
+$servername = "localhost"; 
+$username = "root"; 
+$password = ""; 
+$database = "mozilista";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $database);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
 if (!isset($_SESSION['username'])) {
     header("Location: index.php?menu=login");
     exit;
 }
 
 $sql = "SELECT name, user_name, message, timestamp FROM messages ORDER BY timestamp DESC";
-$stmt = sqlsrv_query($conn, $sql);
+$stmt = $conn->query($sql);
 
 if ($stmt === false) {
-    die(print_r(sqlsrv_errors(), true));
+    die("Error: " . $sql . "<br>" . $conn->error);
 }
 ?>
 
@@ -18,17 +31,17 @@ if ($stmt === false) {
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>Time</th>
-            <th>Name</th>
-            <th>Message</th>
+            <th style="color:white"><?>Time</th>
+            <th style="color:white"><?>Name</th>
+            <th style="color:white"><?>Message</th>
         </tr>
     </thead>
     <tbody>
-        <?php while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) : ?>
+        <?php while ($row = $stmt->fetch_assoc()) : ?>
             <tr>
-                <td><?php echo $row['timestamp']->format('Y-m-d H:i:s'); ?></td>
-                <td><?php echo htmlspecialchars($row['name']); ?><?php echo ($row['user_name'] == 'Guest' ? ' (Guest)' : ''); ?></td>
-                <td><?php echo htmlspecialchars($row['message']); ?></td>
+                <td style="color:white"><?php echo $row['timestamp']; ?></td>
+                <td style="color:white"><?><?php echo htmlspecialchars($row['name']); ?><?php echo ($row['user_name'] == 'Guest' ? ' (Guest)' : ''); ?></td>
+                <td style="color:white"><?><?php echo htmlspecialchars($row['message']); ?></td>
             </tr>
         <?php endwhile; ?>
     </tbody>

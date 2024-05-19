@@ -2,35 +2,57 @@
 include 'header.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Get username and password from the form
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $sql = "SELECT id FROM users WHERE user_name = ? AND password = HASHBYTES('SHA1', ?)";
-    $params = array($username, $password);
-    $stmt = sqlsrv_query($conn, $sql, $params);
+    $sql = "SELECT password_hash FROM users WHERE user_name = ?";
+    
+    // Prepare the statement
+    $stmt = $conn->prepare($sql);
 
-    if ($stmt === false) {
-        die(print_r(sqlsrv_errors(), true));
-    }
+    // Bind parameters
+    $stmt->bind_param("s", $username);
 
-    if (sqlsrv_fetch($stmt)) {
-        $_SESSION['username'] = $username;
-        header("Location: index.php");
-        exit;
+    // Execute the statement
+    if ($stmt->execute()) {
+        // Bind result variables
+        $stmt->bind_result($hashedPassword);
+        
+        // Fetch the result
+        if ($stmt->fetch()) {
+            // Verify password
+            if (password_verify($password, $hashedPassword)) {
+                // Password is correct, set session username and redirect to index.php
+                $_SESSION['username'] = $username;
+                header("Location: index.php");
+                exit;
+            } else {
+                // Password is incorrect
+                $error = "Invalid username or password.";
+            }
+        } else {
+            // No user found
+            $error = "Invalid username or password.";
+        }
     } else {
-        $error = "Invalid username or password.";
+        // Error executing SQL statement
+        $error = "Error executing SQL statement: " . $stmt->error;
     }
+
+    $stmt->close();
 }
 ?>
+
 
 <h2>Log In</h2>
 <form action="index.php?menu=login" method="post">
     <div>
-        <label for="username">Username:</label>
+        <label for="username" style="color:white">Username:</label>
         <input type="text" id="username" name="username" required>
     </div>
     <div>
-        <label for="password">Password:</label>
+        <label for="password" style="color:white">Password:</label>
         <input type="password" id="password" name="password" required>
     </div>
     <div>

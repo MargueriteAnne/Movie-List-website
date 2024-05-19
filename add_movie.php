@@ -1,6 +1,18 @@
 <?php
 include 'header.php';
 
+$servername = "localhost";
+$username = "root"; 
+$password = ""; 
+$database = "mozilista"; 
+
+$conn = new mysqli($servername, $username, $password, $database);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
 if (!isset($_SESSION['username'])) {
     header("Location: index.php?menu=login");
     exit;
@@ -11,14 +23,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $category = $_POST['category'];
     $username = $_SESSION['username'];
 
-    $sql = "INSERT INTO movies (title, category, user_name) VALUES (?, ?, ?)";
-    $params = array($title, $category, $username);
-    $stmt = sqlsrv_query($conn, $sql, $params);
+    
+    $sql = "INSERT INTO movies (user_name, movie_name, category) VALUES (?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sss", $username, $title, $category);
 
-    if ($stmt === false) {
-        die(print_r(sqlsrv_errors(), true));
+ 
+    if ($stmt->execute() === FALSE) {
+        die("Error: " . $sql . "<br>" . $conn->error);
     }
 
+    $stmt->close();
+    
     header("Location: index.php?menu=movie_list");
     exit;
 }
@@ -27,11 +43,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <h2>Add Movie</h2>
 <form action="index.php?menu=add_movie" method="post">
     <div>
-        <label for="title">Movie Title:</label>
+        <label for="title" style="color:white">Movie Title:</label>
         <input type="text" id="title" name="title" required>
     </div>
     <div>
-        <label for="category">Category:</label>
+        <label for="category" style="color:white">Category:</label>
         <select id="category" name="category" required>
             <option value="Watching">Watching</option>
             <option value="Watched">Watched</option>

@@ -6,18 +6,22 @@ if (!isset($_SESSION['username'])) {
     exit;
 }
 
-$sql = "SELECT * FROM images WHERE user_name = ?";
-$params = array($_SESSION['username']);
-$stmt = sqlsrv_query($conn, $sql, $params);
 
-if ($stmt === false) {
-    die(print_r(sqlsrv_errors(), true));
+$sql = "SELECT * FROM images WHERE user_name = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $_SESSION['username']);
+
+if ($stmt->execute() === FALSE) {
+    die("Error: " . $sql . "<br>" . $conn->error);
 }
+
+$result = $stmt->get_result();
+
 ?>
 
 <h2>Image Gallery</h2>
 <div class="gallery">
-    <?php while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) : ?>
+    <?php while ($row = $result->fetch_assoc()) : ?>
         <div class="gallery-item">
             <img src="uploads/<?php echo htmlspecialchars($row['file_name']); ?>" alt="Image">
         </div>

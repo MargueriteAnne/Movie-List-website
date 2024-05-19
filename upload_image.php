@@ -1,6 +1,20 @@
 <?php
 include 'header.php';
 
+
+$servername = "localhost"; 
+$username = "root"; 
+$password = ""; 
+$database = "mozilista"; 
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $database);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
 if (!isset($_SESSION['username'])) {
     header("Location: index.php?menu=login");
     exit;
@@ -47,10 +61,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
             $sql = "INSERT INTO images (user_name, file_name) VALUES (?, ?)";
             $params = array($_SESSION['username'], basename($_FILES["fileToUpload"]["name"]));
-            $stmt = sqlsrv_query($conn, $sql, $params);
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("ss", $_SESSION['username'], basename($_FILES["fileToUpload"]["name"]));
 
-            if ($stmt === false) {
-                die(print_r(sqlsrv_errors(), true));
+            if ($stmt->execute() === FALSE) {
+                die("Error: " . $sql . "<br>" . $conn->error);
             }
 
             echo "The file ". htmlspecialchars(basename($_FILES["fileToUpload"]["name"])). " has been uploaded.";
@@ -64,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <h2>Upload Image</h2>
 <form action="index.php?menu=upload_image" method="post" enctype="multipart/form-data">
     Select image to upload:
-    <input type="file" name="fileToUpload" id="fileToUpload">
+    <input type="file" name="fileToUpload" id="fileToUpload" >
     <input type="submit" value="Upload Image" name="submit">
 </form>
 

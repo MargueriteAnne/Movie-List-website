@@ -1,5 +1,6 @@
 <?php
-include 'header.php';
+Include 'header.php';
+include 'config.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
@@ -7,27 +8,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $first_name = $_POST['first_name'];
     $last_name = $_POST['last_name'];
 
+    
     $sql = "SELECT id FROM users WHERE user_name = ?";
-    $params = array($username);
-    $stmt = sqlsrv_query($conn, $sql, $params);
-    if ($stmt === false) {
-        die(print_r(sqlsrv_errors(), true));
-    }
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    if (sqlsrv_fetch($stmt)) {
+    if ($result->num_rows > 0) {
         $error = "Username already exists.";
     } else {
-        $sql = "INSERT INTO users (first_name, last_name, user_name, password) VALUES (?, ?, ?, HASHBYTES('SHA1', ?))";
-        $params = array($first_name, $last_name, $username, $password);
-        $stmt = sqlsrv_query($conn, $sql, $params);
+        // Hash the password using PHP's built-in password_hash function
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-        if ($stmt === false) {
-            die(print_r(sqlsrv_errors(), true));
+        $sql = "INSERT INTO users (first_name, last_name, user_name, password_hash) VALUES (?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssss", $first_name, $last_name, $username, $hashedPassword);
+
+        if ($stmt->execute()) {
+            $_SESSION['username'] = $username;
+            header("Location: index.php");
+            exit;
+        } else {
+            die("Error: " . $conn->error);
         }
-
-        $_SESSION['username'] = $username;
-        header("Location: index.php");
-        exit;
     }
 }
 ?>
@@ -35,19 +39,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <h2>Register</h2>
 <form action="index.php?menu=register" method="post">
     <div>
-        <label for="first_name">First Name:</label>
+        <label for="first_name" style="color:white">First Name:</label>
         <input type="text" id="first_name" name="first_name" required>
     </div>
     <div>
-        <label for="last_name">Last Name:</label>
+        <label for="last_name"style="color:white">Last Name:</label>
         <input type="text" id="last_name" name="last_name" required>
     </div>
     <div>
-        <label for="username">Username:</label>
+        <label for="username"style="color:white">Username:</label>
         <input type="text" id="username" name="username" required>
     </div>
     <div>
-        <label for="password">Password:</label>
+        <label for="password"style="color:white">Password:</label>
         <input type="password" id="password" name="password" required>
     </div>
     <div>

@@ -9,33 +9,38 @@ if (!isset($_SESSION['username'])) {
 
 $username = $_SESSION['username'];
 
-$sql = "SELECT title, category FROM movies WHERE user_name = ?";
-$params = array($username);
-$stmt = sqlsrv_query($conn, $sql, $params);
+$sql = "SELECT movie_name, category FROM movies WHERE user_name = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $username);
 
-if ($stmt === false) {
-    die(print_r(sqlsrv_errors(), true));
-}
-?>
-
-<div class="container">
-    <h2>My Movie List</h2>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Category</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) : ?>
+if ($stmt->execute()) {
+    $result = $stmt->get_result();
+    ?>
+    <div class="container">
+        <h2>My Movie List</h2>
+        <table class="table table-striped">
+            <thead>
                 <tr>
-                    <td><?php echo htmlspecialchars($row['title']); ?></td>
-                    <td><?php echo htmlspecialchars($row['category']); ?></td>
+                    <th style="color:white">Title</th>
+                    <th style="color:white">Category</th>
                 </tr>
-            <?php endwhile; ?>
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+                <?php while ($row = $result->fetch_assoc()) : ?>
+                    <tr>
+                        <td style="color:white"><?php echo htmlspecialchars($row['movie_name']); ?></td>
+                        <td style="color:white"><?php echo htmlspecialchars($row['category']); ?></td>
+                    </tr>
+                <?php endwhile; ?>
+            </tbody>
+        </table>
+    </div>
+    <?php
+} else {
+    echo "Error executing SQL statement: " . $stmt->error;
+}
 
-<?php include 'footer.php'; ?>
+$stmt->close();
+
+include 'footer.php';
+?>

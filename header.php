@@ -92,6 +92,20 @@ session_start();
             height: 25%;
             position: sticky;
         }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px; 
+        }
+        .gallery-item {
+            flex: 1 1 calc(25% - 15px); 
+            box-sizing: border-box;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
     </style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5+Z6Lqg5x8N9xu2+j0Ipe0qXh+8tjy5BDJi8jv4u" crossorigin="anonymous">
 </head>

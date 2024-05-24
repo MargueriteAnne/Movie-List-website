@@ -1,20 +1,6 @@
 <?php
 include 'header.php';
 
-
-$servername = "localhost"; 
-$username = "root"; 
-$password = ""; 
-$database = "mozilista"; 
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $database);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
 if (!isset($_SESSION['username'])) {
     header("Location: index.php?menu=login");
     exit;
@@ -77,11 +63,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 ?>
 
 <h2>Upload Image</h2>
-<form action="index.php?menu=upload_image" method="post" enctype="multipart/form-data">
+<form action="index.php?menu=upload_image" method="post" enctype="multipart/form-data" style="color:white">
     Select image to upload:
     <input type="file" name="fileToUpload" id="fileToUpload" >
     <br>
+    <br>
     <input type="submit" value="Upload Image" name="submit">
+    
+   
 </form>
-
+<br>
+<button onclick="window.location.href='index.php'">Go to Home Page</button>
 <?php include 'footer.php'; ?>

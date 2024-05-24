@@ -1,7 +1,4 @@
 <?php
-Include 'header.php';
-include 'config.php';
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $password = $_POST['password'];
@@ -34,6 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 }
+Include 'header.php';
 ?>
 
 <h2>Register</h2>
@@ -42,20 +40,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <label for="first_name" style="color:white">First Name:</label>
         <input type="text" id="first_name" name="first_name" required>
     </div>
+    <br>
     <div>
         <label for="last_name"style="color:white">Last Name:</label>
         <input type="text" id="last_name" name="last_name" required>
     </div>
+    <br>
     <div>
         <label for="username"style="color:white">Username:</label>
         <input type="text" id="username" name="username" required>
     </div>
+    <br>
     <div>
         <label for="password"style="color:white">Password:</label>
         <input type="password" id="password" name="password" required>
     </div>
+    <br>
     <div>
         <input type="submit" value="Register">
+        <button onclick="window.location.href='index.php'">Go to Home Page</button>
     </div>
 </form>
 <?php if (isset($error)) : ?>

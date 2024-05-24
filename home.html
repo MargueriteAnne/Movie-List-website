@@ -1,20 +1,4 @@
 <?php
-session_start();
-
-$servername = "localhost"; 
-$username = "root";
-$password = ""; 
-$database = "mozilista"; 
-
-
-$conn = new mysqli($servername, $username, $password, $database);
-
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $password = $_POST['password'];
@@ -127,21 +111,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             margin-right: 20px;
         }
 
-            .video-container video {
-                width: 100%;
-                height: auto;
-            }
+        .video-container video {
+            width: 100%;
+            height: auto;
+        }
 
-            .video-container iframe {
-                width: 100%;
-                height: auto;
-            }
+        .video-container iframe {
+            width: 100%;
+            height: auto;
+        }
 
         #map-section {
-            width: 100%;
-            height: 25%;
-            position: sticky;
+            text-align: center;
+            margin: 20px;
         }
+        #map-section iframe {
+            width: 100%;
+            height: 500px;
+            border: 0;
+        }
+        
     </style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5+Z6Lqg5x8N9xu2+j0Ipe0qXh+8tjy5BDJi8jv4u" crossorigin="anonymous">
 </head>
@@ -210,7 +199,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <section id="map-section">
         <h2>Our Location</h2>
-        <iframe src="https://www.google.com/maps/place/Kecskem%C3%A9t,+Izs%C3%A1ki+%C3%BAt+10,+6000/@46.8951452,19.6662058,17z/data=!4m6!3m5!1s0x4743da7757651367:0xfe9bb765d75b9fc6!8m2!3d46.8951452!4d19.6676768!16s%2Fg%2F11bw4337jh?entry=ttu" frameborder="0" allowfullscreen></iframe>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10905.349278027916!2d19.660377502441424!3d46.8960840773661!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4743da7a6c479e1d%3A0xc8292b3f6dc69e7f!2sJohn%20von%20Neumann%20University%20GAMF%20Faculty%20of%20Engineering%20and%20Computer%20Science!5e0!3m2!1spt-PT!2shu!4v1716222122027!5m2!1spt-PT!2shu" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </section>
     
 

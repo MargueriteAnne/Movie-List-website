@@ -1,5 +1,4 @@
 <?php
-include 'config.php';
 include 'header.php';
 
 if (!isset($_SESSION['username'])) {
@@ -42,5 +41,9 @@ if ($stmt->execute()) {
 
 $stmt->close();
 
+?>
+<br>
+<button onclick="window.location.href='index.php'">Go to Home Page</button>
+<?php
 include 'footer.php';
 ?>

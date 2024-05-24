@@ -3,22 +3,16 @@ session_start();
 
 
 $servername = "localhost"; 
-$username = "root";
-$password = "";
-$database = "mozilista";
+$username = "id22186937_mozilista24";
+$password = "Mozilista2024.";
+$database = "id22186937_mozilista";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $database);
 
-// Check connection
-if ($conn->connect_error) {
-    die("MySQLi Connection failed: " . $conn->connect_error);
-} else {
-    echo "MySQLi Connected successfully";
-}
 
 $menuItems = [
-    'home' => ['file' => 'home.php', 'label' => 'Home'],
+    'home' => ['file' => 'home.php', 'label' => 'home'],
     'login' => ['file' => 'login.php', 'label' => 'Log In'],
     'register' => ['file' => 'register.php', 'label' => 'Register'],
     'logout' => ['file' => 'logout.php', 'label' => 'Log Out'],

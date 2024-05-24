@@ -2,9 +2,9 @@
 include 'header.php';
 
 $servername = "localhost"; 
-$username = "root"; 
-$password = ""; 
-$database = "mozilista";
+$username = "id22186937_mozilista24";
+$password = "Mozilista2024.";
+$database = "id22186937_mozilista";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $database);
@@ -46,5 +46,7 @@ if ($stmt === false) {
         <?php endwhile; ?>
     </tbody>
 </table>
+<br>
+<button onclick="window.location.href='index.php'">Go to Home Page</button>
 
 <?php include 'footer.php'; ?>

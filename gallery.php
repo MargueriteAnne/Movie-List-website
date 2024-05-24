@@ -27,5 +27,6 @@ $result = $stmt->get_result();
         </div>
     <?php endwhile; ?>
 </div>
-
+<br>
+<button onclick="window.location.href='index.php'">Go to Home Page</button>
 <?php include 'footer.php'; ?>

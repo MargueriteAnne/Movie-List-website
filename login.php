@@ -1,6 +1,4 @@
 <?php
-include 'header.php';
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get username and password from the form
     $username = $_POST['username'];
@@ -42,6 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $stmt->close();
 }
+include 'header.php';
 ?>
 
 
@@ -51,12 +50,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <label for="username" style="color:white">Username:</label>
         <input type="text" id="username" name="username" required>
     </div>
+    <br>
     <div>
         <label for="password" style="color:white">Password:</label>
         <input type="password" id="password" name="password" required>
     </div>
+    <br>
     <div>
         <input type="submit" value="Log In">
+        <button onclick="window.location.href='index.php'">Go to Home Page</button>
     </div>
 </form>
 <?php if (isset($error)) : ?>

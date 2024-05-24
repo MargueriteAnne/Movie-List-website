@@ -1,6 +1,4 @@
 <?php
-include 'header.php';
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST['name'];
     $email = $_POST['email'];
@@ -20,6 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header("Location: index.php?menu=view_message");
     exit;
 }
+include 'header.php';
 ?>
 
 <h2>Contact Us</h2>
@@ -38,6 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
     <div>
         <input type="submit" value="Send Message">
+        <button onclick="window.location.href='index.php'">Go to Home Page</button>
     </div>
 </form>
 

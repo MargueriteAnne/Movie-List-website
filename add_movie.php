@@ -1,18 +1,4 @@
 <?php
-include 'header.php';
-
-$servername = "localhost";
-$username = "root"; 
-$password = ""; 
-$database = "mozilista"; 
-
-$conn = new mysqli($servername, $username, $password, $database);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
 if (!isset($_SESSION['username'])) {
     header("Location: index.php?menu=login");
     exit;
@@ -38,6 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header("Location: index.php?menu=movie_list");
     exit;
 }
+include 'header.php';
 ?>
 
 <h2>Add Movie</h2>
@@ -46,6 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <label for="title" style="color:white">Movie Title:</label>
         <input type="text" id="title" name="title" required>
     </div>
+    <br>
     <div>
         <label for="category" style="color:white">Category:</label>
         <select id="category" name="category" required>
@@ -54,8 +42,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <option value="To Watch">To Watch</option>
         </select>
     </div>
+    <br>
     <div>
         <input type="submit" value="Add Movie">
+    
+        <button onclick="window.location.href='index.php'">Go to Home Page</button>
     </div>
 </form>
 
